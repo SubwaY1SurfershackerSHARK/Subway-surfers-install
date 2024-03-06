@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript Runner</title>
+  <style>
+    body {
+      display: flex;
+      margin: 0;
+      height: 100vh;
+    }
+    .left, .right {
+      width: 50%;
+      height: 100%;
+      overflow: auto;
+    }
+    .right {
+      display: flex;
+      flex-direction: column;
+    }
+    .console, .output {
+      height: 50%;
+      overflow: auto;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="left">
+    <textarea id="code" style="width:100%; height:100%;">console.log("Hello, World!");</textarea>
+  </div>
+  <div class="right">
+    <div class="console" id="console"></div>
+    <div class="output">
+      <iframe id="output"></iframe>
+    </div>
+  </div>
+  <script>
+    const codeArea = document.getElementById('code');
+    const consoleDiv = document.getElementById('console');
+    const outputFrame = document.getElementById('output').contentWindow;
+
+    function runCode() {
+      const code = codeArea.value;
+      consoleDiv.innerHTML = '';
+      outputFrame.document.open();
+      outputFrame.document.write('<script>' + code + '<\/script>');
+      outputFrame.document.close();
+    }
+
+    codeArea.addEventListener('keyup', runCode);
+    runCode();
+  </script>
+</body>
+</html>
